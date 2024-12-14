@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+// @ts-ignore
 import Mermaid from 'react-mermaid2';
 import './index.css';
 
