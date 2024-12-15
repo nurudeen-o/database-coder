@@ -168,7 +168,7 @@ const DatabaseDesignApp: React.FC = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/generate-design', 
+        'https://database-coder-production.up.railway.app/api/generate-design', 
         {
           connectionString,
         },
