@@ -64,6 +64,7 @@ const generateSQL = ({ entities, relationships }: { entities: any, relationships
   // Generate SQL for entities
   for (const [tableName, attributes] of Object.entries(entities)) {
     sql += `CREATE TABLE ${tableName} (\n`;
+    // @ts-ignore
     attributes.forEach(({ name, type }: { name: string, type: string }) => {
       const sqlType = convertType(type);
       // Add primary key for ID columns
@@ -83,17 +84,17 @@ const generateSQL = ({ entities, relationships }: { entities: any, relationships
 
 const DatabaseDesignApp: React.FC = () => {
   // Authentication State
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState('');
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, _setToken] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   // Loading States
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  // const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isGeneratingDesign, setIsGeneratingDesign] = useState(false);
 
   // Refs for all input fields to reduce unnecessary re-renders
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  // const usernameRef = useRef<HTMLInputElement>(null);
+  // const passwordRef = useRef<HTMLInputElement>(null);
   const connectionStringRef = useRef<HTMLInputElement>(null);
 
   // Design Generation State
@@ -102,31 +103,31 @@ const DatabaseDesignApp: React.FC = () => {
   const [sqlSchema, setSqlSchema] = useState<string | null>(null);
 
   // Login Handler
-  const handleLogin = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    const username = usernameRef.current?.value || '';
-    const password = passwordRef.current?.value || '';
+  // const handleLogin = useCallback(async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const username = usernameRef.current?.value || '';
+  //   const password = passwordRef.current?.value || '';
 
-    // Reset previous error and set loading state
-    setError(null);
-    setIsLoggingIn(true);
+  //   // Reset previous error and set loading state
+  //   setError(null);
+  //   setIsLoggingIn(true);
 
-    try {
-      const response = await axios.post('http://localhost:3000/api/login', {
-        username,
-        password
-      });
+  //   try {
+  //     const response = await axios.post('http://localhost:3000/api/login', {
+  //       username,
+  //       password
+  //     });
 
-      // Store token and update login state
-      setToken(response.data.token);
-      setIsLoggedIn(true);
-    } catch (err) {
-      setError('Login failed. Please check your credentials.');
-      setIsLoggedIn(false);
-    } finally {
-      setIsLoggingIn(false);
-    }
-  }, []);
+  //     // Store token and update login state
+  //     setToken(response.data.token);
+  //     setIsLoggedIn(true);
+  //   } catch (err) {
+  //     setError('Login failed. Please check your credentials.');
+  //     setIsLoggedIn(false);
+  //   } finally {
+  //     setIsLoggingIn(false);
+  //   }
+  // }, []);
 
   
   // Generate Mermaid ERD from Design Result (unchanged)
@@ -203,17 +204,17 @@ const DatabaseDesignApp: React.FC = () => {
 
 
   // Logout Handler
-  const handleLogout = useCallback(() => {
-    setIsLoggedIn(false);
-    setToken('');
-    setDesignResult(null);
-    setDatabaseSchema(null);
+  // const handleLogout = useCallback(() => {
+  //   setIsLoggedIn(false);
+  //   setToken('');
+  //   setDesignResult(null);
+  //   setDatabaseSchema(null);
     
-    // Reset all input refs
-    if (usernameRef.current) usernameRef.current.value = '';
-    if (passwordRef.current) passwordRef.current.value = '';
-    if (connectionStringRef.current) connectionStringRef.current.value = '';
-  }, []);
+  //   // Reset all input refs
+  //   if (usernameRef.current) usernameRef.current.value = '';
+  //   if (passwordRef.current) passwordRef.current.value = '';
+  //   if (connectionStringRef.current) connectionStringRef.current.value = '';
+  // }, []);
 
   const SqlSection = React.memo(() => {
     const [copied, setCopied] = useState(false);
@@ -272,52 +273,52 @@ const DatabaseDesignApp: React.FC = () => {
   });
 
   // Login Form Component
-  const LoginForm = React.memo(() => (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl p-6"
-    >
-      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Database Design Automation
-      </h2>
-      <form onSubmit={handleLogin} className="space-y-4">
-        {error && (
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-red-500 text-sm text-center"
-          >
-            {error}
-          </motion.p>
-        )}
-        <input 
-          ref={usernameRef}
-          type="text" 
-          placeholder="Username" 
-          required
-          disabled={isLoggingIn}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-        />
-        <input 
-          ref={passwordRef}
-          type="password" 
-          placeholder="Password" 
-          required
-          disabled={isLoggingIn}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-        />
-        <button 
-          type="submit" 
-          disabled={isLoggingIn}
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 flex justify-center items-center"
-        >
-          {isLoggingIn ? <Spinner /> : 'Login'}
-        </button>
-      </form>
-    </motion.div>
-  ));
+  // const LoginForm = React.memo(() => (
+  //   <motion.div 
+  //     initial={{ opacity: 0, scale: 0.9 }}
+  //     animate={{ opacity: 1, scale: 1 }}
+  //     transition={{ duration: 0.3 }}
+  //     className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl p-6"
+  //   >
+  //     <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+  //       Database Design Automation
+  //     </h2>
+  //     <form onSubmit={handleLogin} className="space-y-4">
+  //       {error && (
+  //         <motion.p 
+  //           initial={{ opacity: 0 }}
+  //           animate={{ opacity: 1 }}
+  //           className="text-red-500 text-sm text-center"
+  //         >
+  //           {error}
+  //         </motion.p>
+  //       )}
+  //       <input 
+  //         ref={usernameRef}
+  //         type="text" 
+  //         placeholder="Username" 
+  //         required
+  //         disabled={isLoggingIn}
+  //         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+  //       />
+  //       <input 
+  //         ref={passwordRef}
+  //         type="password" 
+  //         placeholder="Password" 
+  //         required
+  //         disabled={isLoggingIn}
+  //         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+  //       />
+  //       <button 
+  //         type="submit" 
+  //         disabled={isLoggingIn}
+  //         className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 flex justify-center items-center"
+  //       >
+  //         {isLoggingIn ? <Spinner /> : 'Login'}
+  //       </button>
+  //     </form>
+  //   </motion.div>
+  // ));
 
   // Design Generation Interface
   const DesignInterface = React.memo(() => (
